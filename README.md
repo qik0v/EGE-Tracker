@@ -23,7 +23,7 @@
 
 1. Скачай или клонируй репозиторий:
    ```bash
-   git clone 
+   git clone https://github.com/qik0v/EGE-Tracker.git
 
 2. Открой Google Chrome
 
