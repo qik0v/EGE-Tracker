@@ -23,7 +23,7 @@
 
 1. Скачай или клонируй репозиторий:
    ```bash
-   git clone https://github.com/SuperAnonymusProgramist2282009/-Tracker-Steam-Edition-.git
+   git clone 
 
 2. Открой Google Chrome
 
