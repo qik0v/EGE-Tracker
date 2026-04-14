@@ -1,0 +1,95 @@
+body {
+  width: 600px;
+  height: 230px; 
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #1b2838;
+  color: #c7d5e0;
+  overflow: hidden;
+  position: relative;
+}
+
+.bg-layer {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
+  background-image: url('../../assets/icons/banner.png');
+  background-size: cover; background-position: left top; z-index: 0;
+}
+
+.bg-layer::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+  background: linear-gradient(to bottom, rgba(27,40,56,0) 0%, rgba(27,40,56,0.95) 100%);
+}
+
+.content-wrapper { position: absolute; bottom: 0; width: 100%; z-index: 1; }
+
+.action-bar {
+  display: flex; align-items: center; padding: 12px 20px;
+  background: rgba(25, 37, 51, 0.85); backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.left-section { margin-right: 20px; }
+
+.steam-green-btn {
+  background: linear-gradient(to bottom, #799905 5%, #536904 95%);
+  border: none; border-radius: 2px; color: #d2efa9; font-size: 15px; font-weight: bold;
+  display: flex; align-items: center; padding: 6px 15px; cursor: pointer; height: 46px;
+}
+.steam-green-btn:hover { background: linear-gradient(to bottom, #8ed110 5%, #639206 95%); color: #ffffff; }
+
+.steam-green-btn.active { background: linear-gradient(to bottom, #0063b1 5%, #00457a 95%); color: white; }
+.steam-green-btn.active:hover { background: linear-gradient(to bottom, #0078d7 5%, #005a9e 95%); }
+
+.btn-icon { width: 18px; height: 18px; margin-right: 10px; }
+
+.info-section { display: flex; gap: 25px; flex-grow: 1; }
+.info-block { display: flex; flex-direction: column; justify-content: center; }
+.info-label { font-size: 10px; color: #8f98a0; text-transform: uppercase; margin-bottom: 2px; }
+.info-value { font-size: 15px; color: #c6d4df; }
+.streak-value { display: flex; align-items: center; }
+.fire-icon { width: 14px; height: 14px; margin-left: 6px; }
+
+.right-section { margin-left: auto; }
+
+.icon-btn {
+  width: 34px; 
+  height: 34px; 
+  padding: 0; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  background: rgba(255,255,255,0.05); 
+  border: none; 
+  border-radius: 2px; 
+  cursor: pointer; 
+}
+.icon-btn:hover { background: rgba(255,255,255,0.15); }
+.gear-img { width: 18px; height: 18px; opacity: 0.8; }
+
+#settingsModal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(25, 37, 51, 0.98);
+  padding: 20px;
+  box-sizing: border-box; 
+  z-index: 10;
+  overflow-y: auto;
+  display: block; 
+}
+
+.hidden {
+  display: none !important;
+}
+.hidden { display: none !important; }
+#settingsModal h3 { margin-top: 0; margin-bottom: 15px;}
+#settingsModal label { display: block; margin-top: 10px; color: #8f98a0; font-size: 12px;}
+#settingsModal input[type="number"], #settingsModal textarea { width: 100%; padding: 8px; margin-top: 5px; background: #1b2838; border: 1px solid #323f4c; color: #fff; box-sizing: border-box; margin-bottom: 5px; }
+#settingsModal button { margin-top: 15px; margin-bottom: 20px; padding: 8px 15px; background: #323f4c; border: none; color: white; cursor: pointer; border-radius: 2px; }
+#settingsModal button:hover { background: #415263; }
+.close-btn { background: #4c1b1b !important; margin-left: 10px;}
+.close-btn:hover { background: #6b2424 !important; }
+.checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 13px !important; color: #c6d4df !important; margin-top: 15px !important; cursor: pointer;}
+.checkbox-label input { width: 16px; height: 16px; cursor: pointer; }

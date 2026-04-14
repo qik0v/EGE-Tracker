@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  
+  <div class="bg-layer"></div>
+
+  <div class="content-wrapper">
+    <div class="action-bar">
+      <div class="left-section">
+        <button id="startBtn" class="steam-green-btn">
+          <img src="../../assets/icons/play.png" id="btnIcon" class="btn-icon">
+          <div class="btn-text-wrapper">
+            <span id="btnText">НАЧАТЬ ОБУЧЕНИЕ</span>
+          </div>
+        </button>
+      </div>
+
+      <div class="info-section">
+        <div class="info-block">
+          <div class="info-label">ПОСЛЕДНИЙ ЗАПУСК</div>
+          <div class="info-value" id="lastSession">Сегодня</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">ВЫ ОБУЧАЛИСЬ</div>
+          <div class="info-value"><span id="timeStudied">0.0</span> ч.</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">СТРИК</div>
+          <div class="info-value streak-value">
+            <span id="streakDays">0</span>
+            <img src="../../assets/icons/fire.png" class="fire-icon">
+          </div>
+        </div>
+      </div>
+
+      <div class="right-section">
+        <button id="settingsBtn" class="icon-btn">
+          <img src="../../assets/icons/gear.png" class="gear-img">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Окно настроек -->
+  <div id="settingsModal" class="hidden">
+    <h3>Настройки</h3>
+    
+    <label>Изменить время (в часах):</label>
+    <input type="number" id="manualTime" step="0.1" placeholder="Например: 45.9">
+
+    <label>Изменить стрик (дней):</label>
+    <input type="number" id="manualStreak" step="1" placeholder="Например: 3">
+    
+    <label>Сайты для авто-таймера (через запятую):</label>
+    <textarea id="autoSites">sdamgia.ru, fipi.ru, umsch.com</textarea>
+    
+    <label class="checkbox-label">
+      <input type="checkbox" id="closeTabsToggle"> Закрывать учебные вкладки при остановке
+    </label>
+
+    <button id="saveSitesBtn">Сохранить настройки</button>
+    <button id="closeSettings" class="close-btn">Закрыть</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
