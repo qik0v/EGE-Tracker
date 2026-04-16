@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ЕГЭ Tracker (Steam Edition)",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "action": {
     "default_popup": "src/popup/popup.html",
     "default_icon": "assets/icons/icon128.png"
