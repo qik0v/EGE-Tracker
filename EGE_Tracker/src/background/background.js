@@ -1,17 +1,22 @@
 let timerInterval = null;
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.set({
-    totalSeconds: 0,
-    isStudying: false,
-    useAutoTimer: true,
-    autoSites: ['sdamgia.ru', 'fipi.ru', 'umsch.com'],
-    closeTabsOnStop: true,
-    ignoredTabIds: [],
-    lastStudyDate: new Date().toLocaleDateString('ru-RU'),
-    streakDays: 0,
-    isCurrentlyRunning: false
+  chrome.storage.local.get('totalSeconds', (data) => {
+    if (data.totalSeconds === undefined) {
+      chrome.storage.local.set({
+        totalSeconds: 0,
+        isStudying: false,
+        useAutoTimer: true,
+        autoSites: ['sdamgia.ru', 'fipi.ru', 'umsch.com'],
+        closeTabsOnStop: true,
+        ignoredTabIds: [],
+        lastStudyDate: new Date().toLocaleDateString('ru-RU'),
+        streakDays: 0,
+        isCurrentlyRunning: false
+      });
+    }
   });
+  
   startTimerLoop();
 });
 
