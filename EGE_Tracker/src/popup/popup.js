@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
       autoSitesInput.value = (data.autoSites || []).join(', ');
       closeTabsToggle.checked = data.closeTabsOnStop !== false;
       useAutoTimerToggle.checked = data.useAutoTimer !== false;
+      manualTimeInput.value = '';
+      manualStreakInput.value = '';
     });
   }
 
@@ -73,7 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   settingsBtn.addEventListener('click', () => settingsModal.classList.remove('hidden'));
-  closeSettings.addEventListener('click', () => settingsModal.classList.add('hidden'));
+  
+  closeSettings.addEventListener('click', () => {
+    settingsModal.classList.add('hidden');
+    loadSettingsInputs();
+  });
 
   saveSitesBtn.addEventListener('click', () => {
     let updateData = {};
