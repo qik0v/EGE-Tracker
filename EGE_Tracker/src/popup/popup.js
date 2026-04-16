@@ -15,17 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const manualStreakInput = document.getElementById('manualStreak');
   const autoSitesInput = document.getElementById('autoSites');
   const closeTabsToggle = document.getElementById('closeTabsToggle');
+  const useAutoTimerToggle = document.getElementById('useAutoTimerToggle');
 
-  function loadUI() {
-    chrome.storage.local.get(null, (data) => {
-      updateDisplayTime(data.totalSeconds || 0);
+  function updateTimerUI() {
+    chrome.storage.local.get(['totalSeconds', 'streakDays', 'lastStudyDate', 'isCurrentlyRunning'], (data) => {
+      timeStudiedEl.textContent = ((data.totalSeconds || 0) / 3600).toFixed(1);
       streakDaysEl.textContent = data.streakDays || 0;
       
       let today = new Date().toLocaleDateString('ru-RU');
       lastSessionEl.textContent = (data.lastStudyDate === today) ? "Сегодня" : (data.lastStudyDate || "Никогда");
-      
-      autoSitesInput.value = (data.autoSites || []).join(', ');
-      closeTabsToggle.checked = data.closeTabsOnStop !== false;
 
       if (data.isCurrentlyRunning) {
         startBtn.classList.add('active');
@@ -39,8 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  loadUI();
-  setInterval(loadUI, 1000); 
+  function loadSettingsInputs() {
+    chrome.storage.local.get(['autoSites', 'closeTabsOnStop', 'useAutoTimer'], (data) => {
+      autoSitesInput.value = (data.autoSites || []).join(', ');
+      closeTabsToggle.checked = data.closeTabsOnStop !== false;
+      useAutoTimerToggle.checked = data.useAutoTimer !== false;
+    });
+  }
+
+  updateTimerUI();
+  loadSettingsInputs();
+  setInterval(updateTimerUI, 1000); 
 
   startBtn.addEventListener('click', () => {
     chrome.storage.local.get(['isCurrentlyRunning', 'autoSites', 'closeTabsOnStop', 'ignoredTabIds'], (data) => {
@@ -58,11 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
         chrome.storage.local.set({ isStudying: false, isCurrentlyRunning: false });
-
       } else {
         chrome.storage.local.set({ isStudying: true, isCurrentlyRunning: true, ignoredTabIds: [] });
       }
-      setTimeout(loadUI, 100);
+      setTimeout(updateTimerUI, 100);
     });
   });
 
@@ -81,15 +87,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let sites = autoSitesInput.value.split(',').map(s => s.trim()).filter(s => s);
     updateData.autoSites = sites;
     updateData.closeTabsOnStop = closeTabsToggle.checked;
+    updateData.useAutoTimer = useAutoTimerToggle.checked;
 
     chrome.storage.local.set(updateData, () => {
       manualTimeInput.value = '';
       manualStreakInput.value = '';
-      loadUI();
+      updateTimerUI(); 
+      
+      let originalText = saveSitesBtn.textContent;
+      saveSitesBtn.textContent = "Сохранено!";
+      setTimeout(() => {
+        saveSitesBtn.textContent = originalText;
+      }, 1500);
     });
   });
-
-  function updateDisplayTime(seconds) {
-    timeStudiedEl.textContent = (seconds / 3600).toFixed(1);
-  }
 });

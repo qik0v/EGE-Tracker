@@ -4,6 +4,7 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.set({
     totalSeconds: 0,
     isStudying: false,
+    useAutoTimer: true,
     autoSites: ['sdamgia.ru', 'fipi.ru', 'umsch.com'],
     closeTabsOnStop: true,
     ignoredTabIds: [],
@@ -17,14 +18,15 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.runtime.onStartup.addListener(() => startTimerLoop());
 
 function checkActiveState() {
-  chrome.storage.local.get(['isStudying', 'autoSites', 'ignoredTabIds'], (data) => {
+  chrome.storage.local.get(['isStudying', 'autoSites', 'ignoredTabIds', 'useAutoTimer'], (data) => {
     let isStudyingManually = data.isStudying || false;
     let autoSites = data.autoSites || [];
     let ignoredTabIds = data.ignoredTabIds || [];
+    let useAutoTimer = data.useAutoTimer !== false;
 
     chrome.tabs.query({}, (tabs) => {
       let activeStudyTabs = tabs.filter(tab => {
-        if (!tab.url) return false;
+        if (!useAutoTimer || !tab.url) return false;
         let isSiteMatch = autoSites.some(site => tab.url.toLowerCase().includes(site.toLowerCase().trim()));
         let isNotIgnored = !ignoredTabIds.includes(tab.id);
         return isSiteMatch && isNotIgnored;
@@ -59,7 +61,6 @@ function startTimerLoop() {
         
         let diffDays = Math.floor((todayDateOnly - lDateObj) / (1000 * 60 * 60 * 24));
 
-        // Если прошло 2 дня и больше (или баг из будущего) — стрик САМ сбрасывается в 0
         if ((diffDays > 1 || diffDays < 0) && currentStreak !== 0) {
           currentStreak = 0;
           chrome.storage.local.set({ streakDays: 0 });
@@ -80,12 +81,12 @@ function startTimerLoop() {
             let diffDays = Math.floor((todayDateOnly - lDateObj) / (1000 * 60 * 60 * 24));
             
             if (diffDays === 1) {
-              currentStreak += 1; // Продолжил стрик
+              currentStreak += 1;
             } else {
-              currentStreak = 1; // Начат новый стрик
+              currentStreak = 1;
             }
           } else {
-            currentStreak = 1; // Самый первый запуск в жизни
+            currentStreak = 1; 
           }
           
           chrome.storage.local.set({ 
