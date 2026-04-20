@@ -57,6 +57,11 @@ function startTimerLoop() {
   
   timerInterval = setInterval(() => {
     chrome.storage.local.get(['isCurrentlyRunning', 'totalSeconds', 'lastStudyDate', 'streakDays'], (data) => {
+
+      if (data.manualTimeUpdate) {
+        chrome.storage.local.remove('manualTimeUpdate');
+        return; 
+      }
       
       let today = new Date();
       let todayStr = today.toLocaleDateString('ru-RU');
