@@ -87,7 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let hours = parseFloat(manualTimeInput.value);
     let streak = parseInt(manualStreakInput.value);
     
-    if (!isNaN(hours)) updateData.totalSeconds = hours * 3600;
+    // ИСПРАВЛЕНИЕ: Используем Math.round и добавляем флаг для background.js
+    if (!isNaN(hours)) {
+      updateData.totalSeconds = Math.round(hours * 3600);
+      updateData.manualTimeUpdate = true; // Сообщаем фоновому скрипту не трогать время 1 секунду
+    }
     if (!isNaN(streak)) updateData.streakDays = streak;
 
     let sites = autoSitesInput.value.split(',').map(s => s.trim()).filter(s => s);
