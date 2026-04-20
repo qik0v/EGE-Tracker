@@ -20,7 +20,12 @@ chrome.runtime.onInstalled.addListener(() => {
   startTimerLoop();
 });
 
-chrome.runtime.onStartup.addListener(() => startTimerLoop());
+chrome.runtime.onStartup.addListener(() => {
+  chrome.storage.local.set({ isStudying: false, isCurrentlyRunning: false }, () => {
+    checkActiveState();
+    startTimerLoop();
+  });
+});
 
 function checkActiveState() {
   chrome.storage.local.get(['isStudying', 'autoSites', 'ignoredTabIds', 'useAutoTimer'], (data) => {
