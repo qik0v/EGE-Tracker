@@ -82,7 +82,6 @@ function startTimerLoop() {
         }
       }
 
-      // 2. ЛОГИКА, КОГДА ТАЙМЕР ЗАПУЩЕН
       if (data.isCurrentlyRunning) {
         let totalSeconds = (data.totalSeconds || 0) + 1;
         chrome.storage.local.set({ totalSeconds: totalSeconds });
